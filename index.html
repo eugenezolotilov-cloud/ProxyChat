@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- Динамическая SVG-иконка ProxyChat (Favicon & PWA Apple Icon) -->
+    <!-- Динамическая SVG-иконка ProxyChat (Favicon & PWA Apple Icon fallback) -->
     <script>
         const proxySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
@@ -165,9 +165,6 @@
 
         /* SVG Logo adjustments in Light Mode */
         body.light-theme svg rect[fill="#09090b"] { fill: #f4f4f5 !important; }
-        body.light-theme svg path[stroke="url(#echo-edge)"],
-        body.light-theme svg path[stroke="url(#echo-edge-logo)"],
-        body.light-theme svg path[stroke="url(#echo-edge-ws)"] { stroke: rgba(0,0,0,0.15) !important; }
         
         /* Code Blocks inside Light Mode - Keeping them dark and premium */
         body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 {
@@ -253,7 +250,6 @@
                 <label class="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wide">API Key</label>
                 <div class="relative">
                     <input :type="showKey ? 'text' : 'password'" x-model="apiKey" placeholder="sk-..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition shadow-inner">
-                    <!-- Замена динамического data-lucide на обертки x-show для корректной работы с Alpine -->
                     <button @click="showKey = !showKey" class="absolute right-3 top-3 text-zinc-400 hover:text-white transition btn-icon-hover flex items-center justify-center">
                         <span x-show="!showKey"><i data-lucide="eye" class="w-5 h-5"></i></span>
                         <span x-show="showKey" x-cloak><i data-lucide="eye-off" class="w-5 h-5"></i></span>
@@ -346,7 +342,7 @@
             </div>
 
             <div class="p-4 border-t border-white/5 bg-black/20 flex items-center gap-2">
-                <!-- Theme Toggle Button (Исправлено удвоение через использование оберток x-show) -->
+                <!-- Theme Toggle Button -->
                 <button @click="toggleTheme()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-all btn-icon-hover text-zinc-400 shrink-0 flex items-center justify-center">
                     <span x-show="theme === 'dark'"><i data-lucide="sun" class="w-4 h-4"></i></span>
                     <span x-show="theme === 'light'" x-cloak><i data-lucide="moon" class="w-4 h-4"></i></span>
@@ -596,7 +592,6 @@
                 toggleTheme() {
                     this.theme = this.theme === 'dark' ? 'light' : 'dark';
                     localStorage.setItem('proxy_theme', this.theme);
-                    // Нет нужды вызывать safeRefreshUI, так как иконки управляются через x-show (уже в DOM)
                 },
 
                 // ИСХОДНЫЙ РОУТИНГ ПРОВАЙДЕРОВ БЕЗ ИЗМЕНЕНИЙ
@@ -624,7 +619,6 @@
                     return this.chats.find(c => c.id === this.currentChatId);
                 },
 
-                // Сохранение по новым proxy_ ключам
                 saveSettings() {
                     localStorage.setItem('proxy_apiKey', this.apiKey);
                     localStorage.setItem('proxy_custom_base_url', this.customBaseUrl);
@@ -696,7 +690,7 @@
                     this.saveData();
                 },
 
-                // ИСХОДНАЯ ФУНКЦИЯ SENDMESSAGE БЕЗ ИЗМЕНЕНИЙ ЛОГИКИ
+                // ИСХОДНАЯ ФУНКЦИЯ SENDMESSAGE С ПОДДЕРЖКОЙ CUSTOM URL
                 async sendMessage() {
                     if (this.isStreaming || (!this.input.trim() && !this.attachedImage)) return;
                     if (!this.apiKey) return this.isSettingsOpen = true;
@@ -768,7 +762,7 @@
                     this.currentChat.messages.push({ role: 'assistant', text: '', model: activeModel });
                     this.isStreaming = true;
 
-                    // Чтение кастомного URL с поддержкой fallback старых ключей
+                    // Логика Custom Base URL
                     const customUrlStr = localStorage.getItem('proxy_custom_base_url') || localStorage.getItem('prism_custom_base_url');
                     const customUrl = customUrlStr && customUrlStr.trim() !== '' ? customUrlStr.trim().replace(/\/+$/, '') : null;
                     
@@ -784,9 +778,11 @@
                             stream: true
                         };
                     } else if (m.includes('gemini') || m.includes('flash') || m.includes('google')) {
-                        requestBody = {
-                            contents: googleContents
-                        };
+                        if (customUrl) {
+                            requestBody = { model: activeModel, messages: apiMessages, stream: true };
+                        } else {
+                            requestBody = { contents: googleContents };
+                        }
                     } else {
                         requestBody = {
                             model: activeModel,
