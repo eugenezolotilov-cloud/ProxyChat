@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Градиент первой линии (Запрос) -->
+    <linearGradient id="line-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.35"/>
+    </linearGradient>
+
+    <!-- Градиент второй линии (Ответ) -->
+    <linearGradient id="line-white" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Тень для объема -->
+    <filter id="node-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
+    </filter>
+  </defs>
+
+  <!-- OLED фон -->
+  <rect width="512" height="512" rx="112" fill="#09090b"/>
+
+  <g filter="url(#node-shadow)">
+    <!-- Внешняя фоновая орбита (увеличена) -->
+    <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
+
+    <!-- Левая ветка маршрута (увеличена толщина и размах) -->
+    <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue)" stroke-width="11" stroke-linecap="round"/>
+    
+    <!-- Правая ветка маршрута (увеличена толщина и размах) -->
+    <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white)" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- Центральный соединительный ромб (Шлюз увеличен с 80 до 110px) -->
+    <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+
+    <!-- Сияющее ядро прокси (увеличено) -->
+    <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
+    <circle cx="256" cy="256" r="9" fill="#ffffff"/>
+  </g>
+</svg>

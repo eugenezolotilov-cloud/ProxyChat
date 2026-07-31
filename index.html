@@ -5,40 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ProxyChat</title>
     
-    <!-- PWA Settings (Строгие физические файлы) -->
+    <!-- PWA Settings (Строгие физические файлы для Android WebAPK и Apple) -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#09090b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ProxyChat">
     
-    <!-- Иконка для Apple -->
+    <!-- Fallback для Apple (нужен физический PNG файл) -->
     <link rel="apple-touch-icon" href="icon.png">
 
-    <!-- Favicon для вкладки браузера (Оставили SVG Data URI, браузерам это нравится) -->
+    <!-- Favicon для вкладок браузера (Оставляем Data URI, чтобы моментально грузился вектор) -->
     <script>
         const proxySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
     <linearGradient id="line-blue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.35"/>
     </linearGradient>
     <linearGradient id="line-white" x1="100%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.25"/>
     </linearGradient>
     <filter id="node-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
     </filter>
   </defs>
   <rect width="512" height="512" rx="112" fill="#09090b"/>
   <g filter="url(#node-shadow)">
-    <circle cx="256" cy="256" r="140" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2" stroke-dasharray="8 8"/>
-    <path d="M 120 256 C 180 256, 190 170, 256 170" fill="none" stroke="url(#line-blue)" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 392 256 C 332 256, 322 342, 256 342" fill="none" stroke="url(#line-white)" stroke-width="8" stroke-linecap="round"/>
-    <rect x="216" y="216" width="80" height="80" rx="24" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-opacity="0.8"/>
-    <circle cx="256" cy="256" r="16" fill="#3b82f6"/>
-    <circle cx="256" cy="256" r="6" fill="#ffffff"/>
+    <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
+    <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue)" stroke-width="11" stroke-linecap="round"/>
+    <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white)" stroke-width="11" stroke-linecap="round"/>
+    <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+    <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
+    <circle cx="256" cy="256" r="9" fill="#ffffff"/>
   </g>
 </svg>`;
         const iconDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(proxySvg);
@@ -138,10 +138,9 @@
 
         body.light-theme textarea::placeholder, 
         body.light-theme input::placeholder {
-            color: #71717a !important; /* zinc-500 */
+            color: #71717a !important;
         }
         
-        /* Overriding explicit Tailwind classes in Light Theme */
         body.light-theme .text-white { color: #18181b !important; }
         body.light-theme .text-zinc-200, body.light-theme .text-zinc-300 { color: #3f3f46 !important; }
         body.light-theme .text-zinc-400 { color: #52525b !important; }
@@ -166,10 +165,8 @@
         body.light-theme .bg-zinc-800 { background-color: #e4e4e7 !important; }
         body.light-theme .hover\:bg-zinc-700:hover { background-color: #d4d4d8 !important; }
 
-        /* SVG Logo adjustments in Light Mode */
         body.light-theme svg rect[fill="#09090b"] { fill: #f4f4f5 !important; }
         
-        /* Code Blocks inside Light Mode - Keeping them dark and premium */
         body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 {
             background-color: #18181b !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
@@ -183,19 +180,10 @@
             color: #f4f4f5 !important;
         }
 
-        /* ----------------------------------------------------------------- */
-
         /* Micro-animations */
-        .btn-icon-hover {
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
-        }
-        .btn-icon-hover:hover svg, .btn-icon-hover:hover i {
-            transform: scale(1.1);
-        }
-        
-        .gear-spin:hover svg, .gear-spin:hover i {
-            transform: rotate(90deg);
-        }
+        .btn-icon-hover { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s; }
+        .btn-icon-hover:hover svg, .btn-icon-hover:hover i { transform: scale(1.1); }
+        .gear-spin:hover svg, .gear-spin:hover i { transform: rotate(90deg); }
 
         @keyframes trash-shake {
             0%, 100% { transform: rotate(0deg) scale(1); }
@@ -203,33 +191,24 @@
             50% { transform: rotate(10deg) scale(1.15); }
             75% { transform: rotate(-5deg) scale(1.15); }
         }
-        .trash-anim {
-            transition: all 0.2s ease-in-out;
-        }
-        .trash-anim:hover i {
-            animation: trash-shake 0.4s ease-in-out;
-            color: #ef4444 !important; 
-        }
+        .trash-anim { transition: all 0.2s ease-in-out; }
+        .trash-anim:hover i { animation: trash-shake 0.4s ease-in-out; color: #ef4444 !important; }
 
         .prose pre { background: transparent !important; margin: 0 !important; padding: 0 !important; }
         .prose p { margin-top: 0.6em; margin-bottom: 0.6em; }
         .prose:first-child { margin-top: 0; }
         .prose:last-child { margin-bottom: 0; }
-        
         .katex-display { overflow-x: auto; overflow-y: hidden; padding: 10px 0; margin: 0; }
-        
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<!-- Theme Application -->
 <body x-data="app()" x-init="initApp()" :class="theme === 'light' ? 'light-theme' : ''" class="h-screen w-full overflow-hidden flex selection:bg-blue-500/30">
 
-    <!-- Mobile Sidebar Overlay Backdrop -->
+    <!-- Mobile Sidebar Overlay -->
     <div x-show="isSidebarOpen" x-transition.opacity class="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-30" @click="isSidebarOpen = false" x-cloak></div>
 
     <!-- Парящее окно настроек -->
     <div x-show="isSettingsOpen" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        
         <div x-show="isSettingsOpen" x-transition.opacity class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
 
         <div @click.away="if(apiKey) isSettingsOpen = false" 
@@ -253,7 +232,6 @@
                 <label class="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wide">API Key</label>
                 <div class="relative">
                     <input :type="showKey ? 'text' : 'password'" x-model="apiKey" placeholder="sk-..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition shadow-inner">
-                    <!-- Замена динамического data-lucide на обертки x-show для корректной работы с Alpine -->
                     <button @click="showKey = !showKey" class="absolute right-3 top-3 text-zinc-400 hover:text-white transition btn-icon-hover flex items-center justify-center">
                         <span x-show="!showKey"><i data-lucide="eye" class="w-5 h-5"></i></span>
                         <span x-show="showKey" x-cloak><i data-lucide="eye-off" class="w-5 h-5"></i></span>
@@ -298,25 +276,25 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-9 h-9 rounded-xl shadow-lg border border-white/10">
                       <defs>
                         <linearGradient id="line-blue-sb" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
-                          <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+                          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.95"/>
+                          <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.35"/>
                         </linearGradient>
                         <linearGradient id="line-white-sb" x1="100%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
-                          <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.2"/>
+                          <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.25"/>
                         </linearGradient>
                         <filter id="node-shadow-sb" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.9"/>
+                          <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
                         </filter>
                       </defs>
                       <rect width="512" height="512" rx="112" fill="#09090b"/>
                       <g filter="url(#node-shadow-sb)">
-                        <circle cx="256" cy="256" r="140" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2" stroke-dasharray="8 8"/>
-                        <path d="M 120 256 C 180 256, 190 170, 256 170" fill="none" stroke="url(#line-blue-sb)" stroke-width="8" stroke-linecap="round"/>
-                        <path d="M 392 256 C 332 256, 322 342, 256 342" fill="none" stroke="url(#line-white-sb)" stroke-width="8" stroke-linecap="round"/>
-                        <rect x="216" y="216" width="80" height="80" rx="24" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-opacity="0.8"/>
-                        <circle cx="256" cy="256" r="16" fill="#3b82f6"/>
-                        <circle cx="256" cy="256" r="6" fill="#ffffff"/>
+                        <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
+                        <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue-sb)" stroke-width="11" stroke-linecap="round"/>
+                        <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white-sb)" stroke-width="11" stroke-linecap="round"/>
+                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+                        <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
+                        <circle cx="256" cy="256" r="9" fill="#ffffff"/>
                       </g>
                     </svg>
                     <h1 class="font-bold text-lg tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400">ProxyChat</h1>
@@ -378,25 +356,25 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-20 h-20 mb-6 rounded-3xl shadow-2xl opacity-80 transform transition-transform hover:scale-105 duration-300">
                       <defs>
                         <linearGradient id="line-blue-ws" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
-                          <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+                          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.95"/>
+                          <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.35"/>
                         </linearGradient>
                         <linearGradient id="line-white-ws" x1="100%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
-                          <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.2"/>
+                          <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.25"/>
                         </linearGradient>
                         <filter id="node-shadow-ws" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.9"/>
+                          <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
                         </filter>
                       </defs>
                       <rect width="512" height="512" rx="112" fill="#09090b"/>
                       <g filter="url(#node-shadow-ws)">
-                        <circle cx="256" cy="256" r="140" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2" stroke-dasharray="8 8"/>
-                        <path d="M 120 256 C 180 256, 190 170, 256 170" fill="none" stroke="url(#line-blue-ws)" stroke-width="8" stroke-linecap="round"/>
-                        <path d="M 392 256 C 332 256, 322 342, 256 342" fill="none" stroke="url(#line-white-ws)" stroke-width="8" stroke-linecap="round"/>
-                        <rect x="216" y="216" width="80" height="80" rx="24" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-opacity="0.8"/>
-                        <circle cx="256" cy="256" r="16" fill="#3b82f6"/>
-                        <circle cx="256" cy="256" r="6" fill="#ffffff"/>
+                        <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
+                        <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue-ws)" stroke-width="11" stroke-linecap="round"/>
+                        <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white-ws)" stroke-width="11" stroke-linecap="round"/>
+                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+                        <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
+                        <circle cx="256" cy="256" r="9" fill="#ffffff"/>
                       </g>
                     </svg>
                     <h3 class="text-xl font-semibold text-zinc-300 mb-6">Добро пожаловать в ProxyChat</h3>
@@ -554,7 +532,7 @@
                 // Theme Logic
                 theme: localStorage.getItem('proxy_theme') || 'dark',
 
-                // Soft Load (Подхватывает старые ключи от PrismChat при первом запуске)
+                // Soft Load 
                 apiKey: localStorage.getItem('proxy_apiKey') || localStorage.getItem('apiKey') || '',
                 customBaseUrl: localStorage.getItem('proxy_custom_base_url') || localStorage.getItem('prism_custom_base_url') || '',
                 
@@ -586,7 +564,6 @@
                     
                     window.addEventListener('resize', () => {
                         if (window.innerWidth >= 768 && !this.isSidebarOpen && this.chats.length > 0) {
-                            // Опционально
                         }
                     });
 
@@ -598,7 +575,6 @@
                     localStorage.setItem('proxy_theme', this.theme);
                 },
 
-                // ИСХОДНЫЙ РОУТИНГ ПРОВАЙДЕРОВ БЕЗ ИЗМЕНЕНИЙ
                 getEndpointForModel(modelId) {
                     const m = (modelId || '').toLowerCase().trim();
                     if (m.includes('claude') || m.includes('opus') || m.includes('sonnet') || m.includes('anthropic')) {
@@ -694,7 +670,6 @@
                     this.saveData();
                 },
 
-                // ИСХОДНАЯ ФУНКЦИЯ SENDMESSAGE БЕЗ ИЗМЕНЕНИЙ ЛОГИКИ
                 async sendMessage() {
                     if (this.isStreaming || (!this.input.trim() && !this.attachedImage)) return;
                     if (!this.apiKey) return this.isSettingsOpen = true;
@@ -766,7 +741,6 @@
                     this.currentChat.messages.push({ role: 'assistant', text: '', model: activeModel });
                     this.isStreaming = true;
 
-                    // Чтение кастомного URL с поддержкой fallback старых ключей
                     const customUrlStr = localStorage.getItem('proxy_custom_base_url') || localStorage.getItem('prism_custom_base_url');
                     const customUrl = customUrlStr && customUrlStr.trim() !== '' ? customUrlStr.trim().replace(/\/+$/, '') : null;
                     
@@ -782,9 +756,11 @@
                             stream: true
                         };
                     } else if (m.includes('gemini') || m.includes('flash') || m.includes('google')) {
-                        requestBody = {
-                            contents: googleContents
-                        };
+                        if (customUrl) {
+                            requestBody = { model: activeModel, messages: apiMessages, stream: true };
+                        } else {
+                            requestBody = { contents: googleContents };
+                        }
                     } else {
                         requestBody = {
                             model: activeModel,
