@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ProxyChat</title>
     
-    <!-- PWA Settings -->
+    <!-- PWA Settings (Строгие физические файлы) -->
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#09090b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ProxyChat">
+    
+    <!-- Иконка для Apple -->
+    <link rel="apple-touch-icon" href="icon.png">
 
-    <!-- Динамическая SVG->PNG иконка и Автономный Манифест (Без внешних файлов) -->
+    <!-- Favicon для вкладки браузера (Оставили SVG Data URI, браузерам это нравится) -->
     <script>
         const proxySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
@@ -37,41 +41,8 @@
     <circle cx="256" cy="256" r="6" fill="#ffffff"/>
   </g>
 </svg>`;
-        
-        // 1. Обычный Favicon (вкладки десктоп-браузеров понимают SVG)
-        const svgDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(proxySvg);
-        document.head.insertAdjacentHTML('beforeend', `<link rel="icon" type="image/svg+xml" href="${svgDataUrl}">`);
-
-        // 2. Рендер SVG в PNG для Safari (macOS/iOS) и манифеста Android
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const pngDataUrl = canvas.toDataURL('image/png'); // Safari/Android строго требуют PNG!
-            
-            // Вставляем Apple Touch Icon
-            document.head.insertAdjacentHTML('beforeend', `<link rel="apple-touch-icon" sizes="512x512" href="${pngDataUrl}">`);
-            
-            // Генерируем 100% валидный встроенный PWA Manifest для Android Chrome
-            const manifest = {
-                name: "ProxyChat AI",
-                short_name: "ProxyChat",
-                start_url: window.location.pathname || ".",
-                display: "standalone",
-                background_color: "#09090b",
-                theme_color: "#09090b",
-                icons: [
-                    { src: pngDataUrl, sizes: "192x192", type: "image/png", purpose: "any" },
-                    { src: pngDataUrl, sizes: "512x512", type: "image/png", purpose: "any maskable" }
-                ]
-            };
-            const manifestDataUrl = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifest));
-            document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestDataUrl}">`);
-        };
-        img.src = svgDataUrl;
+        const iconDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(proxySvg);
+        document.head.insertAdjacentHTML('beforeend', `<link rel="icon" type="image/svg+xml" href="${iconDataUrl}">`);
     </script>
 
     <!-- Tailwind CSS -->
@@ -723,6 +694,7 @@
                     this.saveData();
                 },
 
+                // ИСХОДНАЯ ФУНКЦИЯ SENDMESSAGE БЕЗ ИЗМЕНЕНИЙ ЛОГИКИ
                 async sendMessage() {
                     if (this.isStreaming || (!this.input.trim() && !this.attachedImage)) return;
                     if (!this.apiKey) return this.isSettingsOpen = true;
@@ -810,11 +782,9 @@
                             stream: true
                         };
                     } else if (m.includes('gemini') || m.includes('flash') || m.includes('google')) {
-                        if (customUrl) {
-                            requestBody = { model: activeModel, messages: apiMessages, stream: true };
-                        } else {
-                            requestBody = { contents: googleContents };
-                        }
+                        requestBody = {
+                            contents: googleContents
+                        };
                     } else {
                         requestBody = {
                             model: activeModel,
