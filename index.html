@@ -480,7 +480,7 @@
                         @keydown.enter.prevent="if(!$event.shiftKey) sendMessage()"
                         rows="1" 
                         class="w-full bg-transparent text-white placeholder-zinc-500 outline-none resize-none py-2.5 md:py-3 px-2 max-h-[40vh] overflow-y-auto text-[15px] md:text-base leading-relaxed" 
-                        placeholder="Сообщение... (начните с @ для модели)">
+                        :placeholder="isMobile ? 'Сообщение...' : 'Сообщение... (начните с @ для модели)'">
                     </textarea>
 
                     <button 
@@ -527,12 +527,13 @@
             Alpine.data('app', () => ({
                 isSettingsOpen: false,
                 isSidebarOpen: window.innerWidth >= 768,
+                isMobile: window.innerWidth < 768,
                 showKey: false,
                 
                 // Theme Logic
                 theme: localStorage.getItem('proxy_theme') || 'dark',
 
-                // Soft Load 
+                // Soft Load
                 apiKey: localStorage.getItem('proxy_apiKey') || localStorage.getItem('apiKey') || '',
                 customBaseUrl: localStorage.getItem('proxy_custom_base_url') || localStorage.getItem('prism_custom_base_url') || '',
                 
@@ -563,7 +564,9 @@
                     }
                     
                     window.addEventListener('resize', () => {
+                        this.isMobile = window.innerWidth < 768;
                         if (window.innerWidth >= 768 && !this.isSidebarOpen && this.chats.length > 0) {
+                            // Опционально
                         }
                     });
 
