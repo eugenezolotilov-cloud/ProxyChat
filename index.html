@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ProxyChat</title>
     
-    <!-- PWA Settings (Строгие физические файлы для Android WebAPK и Apple) -->
+    <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#09090b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ProxyChat">
     
-    <!-- Fallback для Apple (нужен физический PNG файл) -->
+    <!-- Fallback для Apple -->
     <link rel="apple-touch-icon" href="icon.png">
 
-    <!-- Favicon для вкладок браузера (Оставляем Data URI, чтобы моментально грузился вектор) -->
+    <!-- Favicon -->
     <script>
         const proxySvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
@@ -93,7 +93,7 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
         
-        /* Monotonic Liquid Glass Effects (Dark) */
+        /* Glass Effects */
         .glass {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(16px);
@@ -108,14 +108,8 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* -----------------------------------------------------------------
-           СВЕТЛАЯ ТЕМА (LIGHT FROSTED Glass) 
-           ----------------------------------------------------------------- */
-        body.light-theme {
-            background-color: #f4f4f5;
-            color: #18181b;
-        }
-        
+        /* LIGHT THEME */
+        body.light-theme { background-color: #f4f4f5; color: #18181b; }
         body.light-theme ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.15); }
         body.light-theme ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.3); }
 
@@ -136,34 +130,26 @@
         }
 
         body.light-theme textarea::placeholder, 
-        body.light-theme input::placeholder {
-            color: #71717a !important;
-        }
-        
+        body.light-theme input::placeholder { color: #71717a !important; }
         body.light-theme .text-white { color: #18181b !important; }
         body.light-theme .text-zinc-200, body.light-theme .text-zinc-300 { color: #3f3f46 !important; }
         body.light-theme .text-zinc-400 { color: #52525b !important; }
         body.light-theme .text-zinc-500 { color: #71717a !important; }
-        
         body.light-theme .bg-bgbase { background-color: #f4f4f5 !important; }
         body.light-theme .from-bgbase { --tw-gradient-from: #f4f4f5 !important; }
-        
         body.light-theme .bg-black\/40 { background-color: rgba(255, 255, 255, 0.5) !important; }
         body.light-theme .bg-black\/50 { background-color: rgba(255, 255, 255, 0.6) !important; }
         body.light-theme .bg-black\/60 { background-color: rgba(255, 255, 255, 0.7) !important; }
         body.light-theme .bg-black\/80 { background-color: rgba(255, 255, 255, 0.85) !important; }
-        
         body.light-theme .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
         body.light-theme .border-white\/5 { border-color: rgba(0, 0, 0, 0.05) !important; }
-        
         body.light-theme .bg-white\/5 { background-color: rgba(0, 0, 0, 0.03) !important; }
         body.light-theme .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
         body.light-theme .hover\:bg-white\/10:hover { background-color: rgba(0, 0, 0, 0.1) !important; }
         body.light-theme .hover\:bg-white\/5:hover { background-color: rgba(0, 0, 0, 0.05) !important; }
-        
         body.light-theme .bg-zinc-800 { background-color: #e4e4e7 !important; }
         body.light-theme .hover\:bg-zinc-700:hover { background-color: #d4d4d8 !important; }
-
+        
         body.light-theme svg rect[fill="#09090b"] { fill: #f4f4f5 !important; }
         
         body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 {
@@ -171,9 +157,7 @@
             border-color: rgba(255, 255, 255, 0.1) !important;
         }
         body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 span,
-        body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 button {
-            color: #a1a1aa !important;
-        }
+        body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 button { color: #a1a1aa !important; }
         body.light-theme .border-white\/10.shadow-lg > .bg-\[\#0d0e12\] {
             background-color: #09090b !important;
             color: #f4f4f5 !important;
@@ -182,7 +166,6 @@
         /* Micro-animations */
         .btn-icon-hover { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s; }
         .btn-icon-hover:hover svg, .btn-icon-hover:hover i { transform: scale(1.1); }
-        .gear-spin:hover svg, .gear-spin:hover i { transform: rotate(90deg); }
 
         @keyframes trash-shake {
             0%, 100% { transform: rotate(0deg) scale(1); }
@@ -193,15 +176,19 @@
         .trash-anim { transition: all 0.2s ease-in-out; }
         .trash-anim:hover i { animation: trash-shake 0.4s ease-in-out; color: #ef4444 !important; }
 
-        .prose pre { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+        /* Typography fixes for mobile overflow */
+        .prose { max-width: 100% !important; overflow-x: hidden; word-wrap: break-word; }
+        .prose pre { max-width: 100%; overflow-x: auto; background: transparent !important; margin: 0 !important; padding: 0 !important; }
+        .prose table { display: block; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+        .prose img { max-width: 100%; height: auto; }
         .prose p { margin-top: 0.6em; margin-bottom: 0.6em; }
         .prose:first-child { margin-top: 0; }
         .prose:last-child { margin-bottom: 0; }
-        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 10px 0; margin: 0; }
+        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 10px 0; margin: 0; max-width: 100%; }
         [x-cloak] { display: none !important; }
     </style>
 </head>
-<body x-data="app()" x-init="initApp()" :class="theme === 'light' ? 'light-theme' : ''" class="h-screen w-full overflow-hidden flex selection:bg-blue-500/30">
+<body x-data="app()" x-init="initApp()" :class="theme === 'light' ? 'light-theme' : ''" class="h-[100dvh] w-[100vw] max-w-[100vw] overflow-hidden flex selection:bg-blue-500/30">
 
     <!-- Mobile Sidebar Overlay -->
     <div x-show="isSidebarOpen" x-transition.opacity class="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-30" @click="isSidebarOpen = false" x-cloak></div>
@@ -222,7 +209,7 @@
             
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-bold flex items-center gap-2 text-white">
-                    <i data-lucide="settings" class="w-5 h-5 text-blue-400 transition-transform duration-300 hover:rotate-90"></i> Настройки ProxyChat
+                    <i data-lucide="settings" class="w-5 h-5 text-blue-400 transition-transform duration-300 hover:rotate-90"></i> Настройки
                 </h2>
                 <button x-show="apiKey" @click="isSettingsOpen = false" class="text-zinc-400 hover:text-white transition btn-icon-hover p-1.5 rounded-lg hover:bg-white/5"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
@@ -238,7 +225,6 @@
                 </div>
             </div>
 
-            <!-- Custom Base URL Override -->
             <div class="mb-5">
                 <label class="block text-xs font-semibold text-zinc-400 mb-1 uppercase tracking-wide">Custom Base URL</label>
                 <p class="text-[10px] text-zinc-500 mb-2">Оставьте пустым для авто-маршрутизации (OpenAI/Anthropic/Google)</p>
@@ -267,7 +253,7 @@
 
     <!-- Sidebar -->
     <div :class="isSidebarOpen ? 'translate-x-0 w-[298px] pl-2.5' : '-translate-x-full w-0 pl-0'" 
-         class="fixed md:relative z-40 h-full py-2.5 flex flex-col transition-all duration-300 ease-in-out shrink-0 overflow-hidden">
+         class="fixed md:relative z-40 h-[100dvh] py-2.5 flex flex-col transition-all duration-300 ease-in-out shrink-0 overflow-hidden">
         
         <div class="flex-1 glass rounded-3xl flex flex-col shadow-2xl w-[278px] min-w-[278px] overflow-hidden">
             <div class="p-5 flex items-center justify-between border-b border-white/5">
@@ -323,13 +309,13 @@
             </div>
 
             <div class="p-4 border-t border-white/5 bg-black/20 flex items-center gap-2">
-                <!-- Theme Toggle Button -->
+                <!-- Theme Toggle -->
                 <button @click="toggleTheme()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-all btn-icon-hover text-zinc-400 shrink-0 flex items-center justify-center">
                     <span x-show="theme === 'dark'"><i data-lucide="sun" class="w-4 h-4"></i></span>
                     <span x-show="theme === 'light'" x-cloak><i data-lucide="moon" class="w-4 h-4"></i></span>
                 </button>
 
-                <!-- Settings Button -->
+                <!-- Settings -->
                 <button @click="isSettingsOpen = true" class="flex-1 py-2.5 px-4 rounded-xl hover:bg-white/10 transition-all flex items-center gap-3 text-sm text-zinc-300 font-medium btn-icon-hover group">
                     <i data-lucide="settings" class="w-4 h-4 text-zinc-400 transition-transform duration-500 group-hover:rotate-180"></i> Настройки
                 </button>
@@ -338,9 +324,10 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col h-full relative bg-bgbase">
+    <!-- ДОБАВЛЕНЫ ЖЕСТКИЕ ОГРАНИЧЕНИЯ: w-full max-w-full min-w-0 -->
+    <div class="flex-1 flex flex-col h-[100dvh] w-full max-w-full relative bg-bgbase min-w-0">
         
-        <!-- Плавающая кнопка Меню -->
+        <!-- Меню (Бургер) -->
         <div class="absolute top-4 left-4 z-30" x-show="!isSidebarOpen" x-transition.opacity.duration.300ms x-cloak>
             <button @click="isSidebarOpen = true" class="p-2.5 glass rounded-xl text-zinc-300 hover:text-white border border-white/15 shadow-xl bg-black/50 backdrop-blur-md flex items-center gap-2 btn-icon-hover">
                 <i data-lucide="menu" class="w-5 h-5"></i>
@@ -349,9 +336,11 @@
         </div>
 
         <!-- Messages Area -->
-        <div id="chat-container" class="flex-1 overflow-y-auto overflow-x-hidden p-4 pt-20 md:p-8 md:pt-20 space-y-8 scroll-smooth relative z-0">
+        <!-- ДОБАВЛЕНЫ ЖЕСТКИЕ ОГРАНИЧЕНИЯ: w-full max-w-full min-w-0 -->
+        <div id="chat-container" class="flex-1 overflow-y-auto overflow-x-hidden p-4 pt-20 md:p-8 md:pt-20 space-y-8 scroll-smooth relative z-0 w-full max-w-full min-w-0">
             <template x-if="currentChat?.messages.length === 0">
-                <div class="flex flex-col items-center justify-center h-full text-zinc-500 animate-fade-in">
+                <!-- Ограничена максимальная ширина экрана приветствия -->
+                <div class="flex flex-col items-center justify-center h-full text-zinc-500 animate-fade-in w-full max-w-full px-4 text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-20 h-20 mb-6 rounded-3xl shadow-2xl opacity-80 transform transition-transform hover:scale-105 duration-300">
                       <defs>
                         <linearGradient id="line-blue-ws" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -387,11 +376,11 @@
             </template>
 
             <template x-for="(msg, index) in currentChat?.messages" :key="index">
-                <div class="w-full flex flex-col items-center max-w-full min-w-0">
+                <!-- Убран items-center, добавлено жесткое ограничение ширины -->
+                <div class="w-full flex flex-col max-w-full min-w-0">
                     
-                    <!-- Визуальный разделитель смены модели -->
                     <template x-if="index === 0 || (currentChat.messages[index-1] && currentChat.messages[index-1].model !== msg.model)">
-                        <div class="w-full flex justify-center mb-6 mt-2 opacity-85 animate-fade-in">
+                        <div class="w-full flex justify-center mb-6 mt-2 opacity-85 animate-fade-in min-w-0">
                             <div class="glass px-4 py-1.5 rounded-full bg-black/40 border border-white/5 flex items-center gap-2 shadow-sm backdrop-blur-md">
                                 <i data-lucide="cpu" class="w-3.5 h-3.5 text-zinc-400"></i>
                                 <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest" x-text="'Модель: ' + (msg.model || 'gpt-5.6-terra')"></span>
@@ -399,18 +388,16 @@
                         </div>
                     </template>
 
-                    <div :class="msg.role === 'user' ? 'flex justify-end' : 'flex justify-start'" class="w-full animate-fade-in min-w-0">
+                    <div :class="msg.role === 'user' ? 'flex justify-end' : 'flex justify-start'" class="w-full animate-fade-in min-w-0 max-w-full">
                         <div :class="msg.role === 'user' ? 'bg-blue-600/20 text-white border-blue-500/20' : 'glass text-gray-200'" class="max-w-full md:max-w-[85%] min-w-0 rounded-2xl px-5 py-4 shadow-md relative group border">
                             
-                            <!-- Attached Image -->
                             <template x-if="msg.image">
-                                <img :src="msg.image" class="max-w-[240px] md:max-w-sm rounded-xl mb-3 border border-white/10 shadow-xl object-contain bg-black/40">
+                                <img :src="msg.image" class="max-w-full md:max-w-sm rounded-xl mb-3 border border-white/10 shadow-xl object-contain bg-black/40">
                             </template>
 
-                            <!-- Markdown Content with Dynamic Theme Class -->
-                            <div class="prose max-w-none w-full min-w-0 overflow-x-auto text-[15px] md:text-base leading-relaxed break-words" :class="theme === 'dark' ? 'prose-invert' : 'prose-neutral'" :id="'msg-' + currentChat.id + '-' + index" x-html="renderMarkdown(msg.text)"></div>
+                            <!-- Установлено overflow-x-hidden на тексте, горизонтальный скролл теперь только у таблиц и кода -->
+                            <div class="prose max-w-full w-full min-w-0 overflow-x-hidden text-[15px] md:text-base leading-relaxed break-words" :class="theme === 'dark' ? 'prose-invert' : 'prose-neutral'" :id="'msg-' + currentChat.id + '-' + index" x-html="renderMarkdown(msg.text)"></div>
 
-                            <!-- Actions Hover -->
                             <div :class="msg.role === 'user' ? 'left-2' : 'right-2'" class="absolute -bottom-5 md:-bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
                                 <button @click="copyText(msg.text)" class="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white border border-white/10 shadow-lg btn-icon-hover">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
@@ -424,13 +411,14 @@
         </div>
 
         <!-- Input Area -->
-        <div class="w-full p-4 md:p-6 shrink-0 relative z-10 bg-bgbase">
+        <!-- ДОБАВЛЕНЫ ЖЕСТКИЕ ОГРАНИЧЕНИЯ: w-full max-w-full min-w-0 -->
+        <div class="w-full max-w-full p-4 md:p-6 shrink-0 relative z-10 bg-bgbase min-w-0">
             
             <div class="absolute bottom-full left-0 w-full h-12 bg-gradient-to-t from-bgbase to-transparent pointer-events-none"></div>
             
-            <div class="max-w-4xl mx-auto relative">
+            <div class="max-w-4xl w-full mx-auto relative min-w-0">
                 <!-- Mentions Popup -->
-                <div x-show="mentionPopupOpen" x-cloak class="absolute bottom-full mb-3 left-0 w-64 glass rounded-xl overflow-hidden shadow-2xl z-50 border border-white/10 transform transition-all">
+                <div x-show="mentionPopupOpen" x-cloak class="absolute bottom-full mb-3 left-0 w-64 max-w-full glass rounded-xl overflow-hidden shadow-2xl z-50 border border-white/10 transform transition-all">
                     <div class="px-4 py-2.5 text-xs font-bold text-zinc-400 uppercase tracking-wider border-b border-white/10 bg-black/40">Выбор модели</div>
                     <template x-for="model in filteredModels" :key="model.id">
                         <div @click="selectMention(model)" class="px-4 py-3 hover:bg-white/10 cursor-pointer flex flex-col gap-1 border-b border-white/5 last:border-0 transition-colors">
@@ -441,8 +429,8 @@
                 </div>
 
                 <!-- Image Preview -->
-                <div x-show="attachedImage" x-cloak class="absolute bottom-full mb-4 left-0 glass p-1.5 rounded-xl border border-white/10 shadow-xl">
-                    <div class="relative group">
+                <div x-show="attachedImage" x-cloak class="absolute bottom-full mb-4 left-0 glass p-1.5 rounded-xl border border-white/10 shadow-xl max-w-full min-w-0">
+                    <div class="relative group inline-block">
                         <img :src="attachedImage" class="h-24 w-auto rounded-lg object-cover">
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center backdrop-blur-sm">
                             <button @click="attachedImage = null" class="bg-red-500/90 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform btn-icon-hover">
@@ -453,10 +441,10 @@
                 </div>
 
                 <!-- Main Input Box -->
-                <div class="glass-input rounded-2xl flex items-end p-2 md:p-2.5 gap-2 transition-all relative">
+                <div class="glass-input rounded-2xl flex items-end p-2 md:p-2.5 gap-2 transition-all relative w-full min-w-0 max-w-full">
                     
-                    <div x-show="isStreaming" x-cloak class="absolute -top-6 left-4 flex items-center gap-2 text-xs font-medium text-zinc-400 bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md shadow-lg">
-                        <div class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)] animate-pulse"></div>
+                    <div x-show="isStreaming" x-cloak class="absolute -top-6 left-4 flex items-center gap-2 text-xs font-medium text-zinc-400 bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md shadow-lg min-w-0 max-w-full overflow-hidden whitespace-nowrap text-ellipsis">
+                        <div class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)] animate-pulse shrink-0"></div>
                         <span>Генерация ответа...</span>
                     </div>
 
@@ -465,13 +453,14 @@
                         <i data-lucide="paperclip" class="w-5 h-5"></i>
                     </label>
 
+                    <!-- Заменено w-full на flex-1 min-w-0 чтобы textarea не распирала контейнер на мобилках -->
                     <textarea 
                         x-ref="textarea"
                         x-model="input" 
                         @input="handleInput"
                         @keydown.enter.prevent="if(!$event.shiftKey) sendMessage()"
                         rows="1" 
-                        class="w-full bg-transparent text-white placeholder-zinc-500 outline-none resize-none py-2.5 md:py-3 px-2 max-h-[40vh] overflow-y-auto text-[15px] md:text-base leading-relaxed" 
+                        class="flex-1 w-full min-w-0 bg-transparent text-white placeholder-zinc-500 outline-none resize-none py-2.5 md:py-3 px-2 max-h-[40vh] overflow-y-auto text-[15px] md:text-base leading-relaxed" 
                         :placeholder="isMobile ? 'Сообщение...' : 'Сообщение... (начните с @ для модели)'">
                     </textarea>
 
@@ -496,16 +485,18 @@
             
             const language = hljs.getLanguage(lang) ? lang : 'plaintext';
             const safeText = encodeURIComponent(text);
-            return `<div class="relative group my-5 rounded-xl overflow-hidden border border-white/10 shadow-lg">
-                      <div class="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-white/5">
-                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">${language}</span>
-                        <button onclick="navigator.clipboard.writeText(decodeURIComponent('${safeText}'))" class="text-zinc-500 hover:text-white transition-colors p-1 flex items-center gap-1.5 bg-white/5 hover:bg-white/10 rounded-md btn-icon-hover">
+            
+            // ДОБАВЛЕНЫ ЖЕСТКИЕ ОГРАНИЧЕНИЯ В БЛОК КОДА: max-w-full w-full min-w-0
+            return `<div class="relative group my-5 rounded-xl overflow-hidden border border-white/10 shadow-lg max-w-full w-full min-w-0">
+                      <div class="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-white/5 min-w-0">
+                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider truncate min-w-0 flex-1">${language}</span>
+                        <button onclick="navigator.clipboard.writeText(decodeURIComponent('${safeText}'))" class="text-zinc-500 hover:text-white transition-colors p-1 flex items-center gap-1.5 bg-white/5 hover:bg-white/10 rounded-md btn-icon-hover shrink-0">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                             <span class="text-[10px] font-medium hidden sm:inline">Копировать</span>
                         </button>
                       </div>
-                      <div class="p-4 bg-[#0d0e12] overflow-x-auto text-sm leading-relaxed">
-                        <pre style="background:transparent; margin:0; padding:0"><code class="language-${language}">${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+                      <div class="p-4 bg-[#0d0e12] overflow-x-auto text-sm leading-relaxed max-w-full">
+                        <pre style="background:transparent; margin:0; padding:0; min-width:0"><code class="language-${language}">${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
                       </div>
                     </div>`;
         };
@@ -522,10 +513,8 @@
                 isMobile: window.innerWidth < 768,
                 showKey: false,
                 
-                // Theme Logic
                 theme: localStorage.getItem('proxy_theme') || 'dark',
 
-                // Soft Load
                 apiKey: localStorage.getItem('proxy_apiKey') || localStorage.getItem('apiKey') || '',
                 customBaseUrl: localStorage.getItem('proxy_custom_base_url') || localStorage.getItem('prism_custom_base_url') || '',
                 
