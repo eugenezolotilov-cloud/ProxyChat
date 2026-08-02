@@ -31,12 +31,11 @@
       <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
     </filter>
   </defs>
-  <rect width="512" height="512" rx="112" fill="#09090b"/>
+  <rect width="512" height="512" rx="112" fill="#000000"/>
   <g filter="url(#node-shadow)">
-    <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
     <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue)" stroke-width="11" stroke-linecap="round"/>
     <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white)" stroke-width="11" stroke-linecap="round"/>
-    <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+    <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#000000" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
     <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
     <circle cx="256" cy="256" r="9" fill="#ffffff"/>
   </g>
@@ -109,7 +108,7 @@
         }
 
         /* -----------------------------------------------------------------
-           СВЕТЛАЯ ТЕМА (LIGHT FROSTED GLASS) 
+           СВЕТЛАЯ ТЕМА (LIGHT FROSTED Glass) 
            ----------------------------------------------------------------- */
         body.light-theme {
             background-color: #f4f4f5;
@@ -164,7 +163,8 @@
         body.light-theme .bg-zinc-800 { background-color: #e4e4e7 !important; }
         body.light-theme .hover\:bg-zinc-700:hover { background-color: #d4d4d8 !important; }
 
-        body.light-theme svg rect[fill="#09090b"] { fill: #f4f4f5 !important; }
+        /* Изменили прицел с #09090b на #000000 для корректной работы с новой OLED иконкой */
+        body.light-theme svg rect[fill="#000000"] { fill: #f4f4f5 !important; }
         
         body.light-theme .border-white\/10.shadow-lg > .bg-zinc-900 {
             background-color: #18181b !important;
@@ -286,12 +286,11 @@
                           <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
                         </filter>
                       </defs>
-                      <rect width="512" height="512" rx="112" fill="#09090b"/>
+                      <rect width="512" height="512" rx="112" fill="#000000"/>
                       <g filter="url(#node-shadow-sb)">
-                        <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
                         <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue-sb)" stroke-width="11" stroke-linecap="round"/>
                         <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white-sb)" stroke-width="11" stroke-linecap="round"/>
-                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#000000" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
                         <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
                         <circle cx="256" cy="256" r="9" fill="#ffffff"/>
                       </g>
@@ -366,12 +365,11 @@
                           <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.95"/>
                         </filter>
                       </defs>
-                      <rect width="512" height="512" rx="112" fill="#09090b"/>
+                      <rect width="512" height="512" rx="112" fill="#000000"/>
                       <g filter="url(#node-shadow-ws)">
-                        <circle cx="256" cy="256" r="175" fill="none" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2.5" stroke-dasharray="10 10"/>
                         <path d="M 90 256 C 160 256, 175 150, 256 150" fill="none" stroke="url(#line-blue-ws)" stroke-width="11" stroke-linecap="round"/>
                         <path d="M 422 256 C 352 256, 337 362, 256 362" fill="none" stroke="url(#line-white-ws)" stroke-width="11" stroke-linecap="round"/>
-                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#18181b" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
+                        <rect x="201" y="201" width="110" height="110" rx="32" transform="rotate(45 256 256)" fill="#000000" stroke="#ffffff" stroke-width="4" stroke-opacity="0.85"/>
                         <circle cx="256" cy="256" r="22" fill="#3b82f6"/>
                         <circle cx="256" cy="256" r="9" fill="#ffffff"/>
                       </g>
@@ -402,13 +400,6 @@
                     <div :class="msg.role === 'user' ? 'flex justify-end' : 'flex justify-start'" class="w-full animate-fade-in min-w-0">
                         <div :class="msg.role === 'user' ? 'bg-blue-600/20 text-white border-blue-500/20' : 'glass text-gray-200'" class="max-w-full md:max-w-[85%] min-w-0 rounded-2xl px-5 py-4 shadow-md relative group border">
                             
-                            <!-- Model Badge -->
-                            <template x-if="msg.modelBadge">
-                                <div class="text-[10px] uppercase tracking-wider text-blue-400 font-bold mb-2.5 flex items-center gap-1.5 opacity-90 border-b border-white/5 pb-2">
-                                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i> <span x-text="msg.modelBadge"></span>
-                                </div>
-                            </template>
-
                             <!-- Attached Image -->
                             <template x-if="msg.image">
                                 <img :src="msg.image" class="max-w-[240px] md:max-w-sm rounded-xl mb-3 border border-white/10 shadow-xl object-contain bg-black/40">
